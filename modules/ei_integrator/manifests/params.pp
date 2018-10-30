@@ -22,13 +22,25 @@ class ei_integrator::params {
   $user_group = 'wso2'
   $user_home = '/home/$user'
   $user_group_id = 802
+  $hostname = 'CF_ELB_DNS_NAME'
+  $mgt_hostname = 'CF_ELB_DNS_NAME'
+  $jdk_version = 'jdk1.8.0_192'
+  $aws_access_key = 'access-key'
+  $aws_secret_key = 'secretkey'
+  $aws_region = 'REGION_NAME'
+  $local_member_host = 'LOCAL-MEMBER-HOST'
+  $http_proxy_port = '80'
+  $https_proxy_port = '443'
   $product = 'wso2ei'
   $product_version = '6.4.0'
   $profile = 'integrator'
-  $hostname = 'localhost'
   $service_name = "${product}-${profile}"
-  $mgt_hostname = 'localhost'
-  $jdk_version = 'jdk1.8.0_192'
+  # $ei_analytics = 'CF_ANALYTICS_IP'
+  $ei_analytics = 'localhost'
+  $mediation_flow_statistics = 'false'
+  # $broker_elb_dns_name  = 'BROKER_ELB_DNS_NAME'
+  $broker_elb_dns_name = 'localhost'
+  $ei_package = 'wso2ei-6.4.0.zip'
 
   # Define the template
   $start_script_template = "bin/${profile}.sh"
@@ -37,19 +49,25 @@ class ei_integrator::params {
     'conf/carbon.xml',
     'conf/axis2/axis2.xml',
     'conf/user-mgt.xml',
-    # 'conf/registry.xml',
-    # 'conf/identity/identity.xml',
-    # 'conf/security/authenticators.xml',
-    # 'conf/tomcat/catalina-server.xml',
+    'conf/registry.xml',
+    'conf/tomcat/catalina-server.xml',
+    'conf/synapse.properties',
+    'conf/jndi.properties',
+    'repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml',
+    'repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml',
   ]
 
   # ------ Configuration Params ------ #
 
   # master-datasources.xml
-  $carbon_db_url = 'jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
-  $carbon_db_username = 'wso2carbon'
-  $carbon_db_password = 'wso2carbon'
-  $carbon_db_driver = 'org.h2.Driver'
+
+  $reg_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2EI_INTEGRATOR_CONFIG_GOV_DB?autoReconnect=true&amp;useSSL=false'
+  $reg_db_username = 'CF_DB_USERNAME'
+  $reg_db_password = 'CF_DB_PASSWORD'
+
+  $user_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2EI_USER_DB?autoReconnect=true&amp;useSSL=false'
+  $user_db_username = 'CF_DB_USERNAME'
+  $user_db_password = 'CF_DB_PASSWORD'
 
   # carbon.xml
   $security_keystore_location = '${carbon.home}/repository/resources/security/wso2carbon.jks'
@@ -57,12 +75,6 @@ class ei_integrator::params {
   $security_keystore_password = 'wso2carbon'
   $security_keystore_key_alias = 'wso2carbon'
   $security_keystore_key_password = 'wso2carbon'
-
-  $security_internal_keystore_location = '${carbon.home}/repository/resources/security/wso2carbon.jks'
-  $security_internal_keystore_type = 'JKS'
-  $security_internal_keystore_password = 'wso2carbon'
-  $security_internal_keystore_key_alias = 'wso2carbon'
-  $security_internal_keystore_key_password = 'wso2carbon'
 
   $security_trust_store_location = '${carbon.home}/repository/resources/security/client-truststore.jks'
   $security_trust_store_type = 'JKS'
@@ -86,13 +98,6 @@ class ei_integrator::params {
   $transport_sender_trust_store_location = 'repository/resources/security/client-truststore.jks'
   $transport_sender_trust_store_type = 'JKS'
   $transport_sender_trust_store_password = 'wso2carbon'
-
-  $clustering_enabled = 'false'
-  $clustering_membership_scheme = 'wka'
-  $clustering_wka_members = [
-    { hostname => '127.0.0.1', port => '4000'},
-    # { hostname => '127.0.0.1', port => '4001'},
-  ]
 
   # user-mgt.xml
   $admin_username = 'admin'

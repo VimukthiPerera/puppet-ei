@@ -29,6 +29,7 @@ class ei_analytics_worker::params {
   $hostname = 'localhost'
   $mgt_hostname = 'localhost'
   $jdk_version = 'jdk1.8.0_192'
+  $ei_package = 'wso2ei-6.4.0.zip'
 
   # Define the template
   $start_script_template = 'wso2/analytics/wso2/worker/bin/carbon.sh'
@@ -88,8 +89,23 @@ class ei_analytics_worker::params {
   $message_tracing_db_password = 'wso2carbon'
   $message_tracing_db_driver = 'org.h2.Driver'
 
-  $ei_analytics_db_url = 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/EI_ANALYTICS;AUTO_SERVER=TRUE'
-  $ei_analytics_db_username = 'wso2carbon'
-  $ei_analytics_db_password = 'wso2carbon'
-  $ei_analytics_db_driver = 'org.h2.Driver'
+  $ei_analytics_db_url = 'jdbc:mysql://CF_RDS_URL:3306/EI_ANALYTICS?useSSL=false'
+  $ei_analytics_db_username = 'CF_DB_USERNAME'
+  $ei_analytics_db_password = 'CF_DB_PASSWORD'
+  $ei_analytics_db_driver = 'com.mysql.jdbc.Driver'
+
+  $ei_carbon_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2_CARBON_DB?useSSL=false'
+  $ei_carbon_db_username = 'CF_DB_USERNAME'
+  $ei_carbon_db_password = 'CF_DB_PASSWORD'
+  $ei_carbon_db_driver = 'com.mysql.jdbc.Driver'
+
+  $ei_persistent_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2_PERSISTENCE_DB?useSSL=false'
+  $ei_persistent_username = 'CF_DB_USERNAME'
+  $ei_persistent_password = 'CF_DB_PASSWORD'
+  $ei_persistent_driver = 'com.mysql.jdbc.Driver'
+
+  $ei_metrics_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2_METRICS_DB?useSSL=false'
+  $ei_metrics_username = 'CF_DB_USERNAME'
+  $ei_metrics_password = 'CF_DB_PASSWORD'
+  $ei_metrics_driver = 'com.mysql.jdbc.Driver'
 }

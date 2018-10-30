@@ -48,10 +48,54 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url><%= @carbon_db_url %></url>
-                    <username><%= @carbon_db_username %></username>
-                    <password><%= @carbon_db_password %></password>
-                    <driverClassName><%= @carbon_db_driver %></driverClassName>
+                    <url>jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <!-- WSO2 MB embedded H2 Store     -->
+
+        <datasource>
+            <name>CONFIG_REGISTRY</name>
+            <description>The data source used for registry- config/governance</description>
+            <jndiConfig>
+                <name>jdbc/WSO2RegistryDS</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url><%= @mb_reg_db_url %></url>
+                    <username><%= @mb_reg_db_username %></username>
+                    <password><%= @mb_reg_db_password %></password>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+        <datasource>
+            <name>WSO2_USER_DB</name>
+            <description>The data source used for user manager</description>
+            <jndiConfig>
+                <name>jdbc/WSO2UserDS</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url><%= @mb_user_db_url %></url>
+                    <username><%= @mb_user_db_username %></username>
+                    <password><%= @mb_user_db_password %></password>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -63,30 +107,29 @@
 
         <!-- WSO2 MB embedded H2 Store     -->
         
-        <datasource>
-            <name>WSO2_MB_STORE_DB</name>
-            <description>The datasource used for message broker database</description>
-            <jndiConfig>
-                <name>WSO2MBStoreDB</name>
-            </jndiConfig>
-            <definition type="RDBMS">
-                <configuration>
-                    <url><%= @mb_store_db_url %></url>
-                    <username><%= @mb_store_db_username %></username>
-                    <password><%= @mb_store_db_password %></password>
-                    <driverClassName><%= @mb_store_db_driver %></driverClassName>
-                    <maxActive>50</maxActive>
-                    <maxWait>60000</maxWait>
-                    <testOnBorrow>true</testOnBorrow>
-                    <validationQuery>SELECT 1</validationQuery>
-                    <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
-                </configuration>
-            </definition>
-        </datasource>
+        <!--<datasource>-->
+            <!--<name>WSO2_MB_STORE_DB</name>-->
+            <!--<description>The datasource used for message broker database</description>-->
+            <!--<jndiConfig>-->
+                <!--<name>WSO2MBStoreDB</name>-->
+            <!--</jndiConfig>-->
+            <!--<definition type="RDBMS">-->
+                <!--<configuration>-->
+                    <!--<url>jdbc:h2:repository/database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>-->
+                    <!--<username>wso2carbon</username>-->
+                    <!--<password>wso2carbon</password>-->
+                    <!--<driverClassName>org.h2.Driver</driverClassName>-->
+                    <!--<maxActive>50</maxActive>-->
+                    <!--<maxWait>60000</maxWait>-->
+                    <!--<testOnBorrow>true</testOnBorrow>-->
+                    <!--<validationQuery>SELECT 1</validationQuery>-->
+                    <!--<validationInterval>30000</validationInterval>-->
+                    <!--<defaultAutoCommit>false</defaultAutoCommit>-->
+                <!--</configuration>-->
+            <!--</definition>-->
+        <!--</datasource>-->
 
         <!-- MySQL data source -->
-<!--
         <datasource>
              <name>WSO2_MB_STORE_DB</name>
              <jndiConfig>
@@ -95,9 +138,9 @@
              <definition type="RDBMS">
                  <configuration>
                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                     <url>jdbc:mysql://localhost/wso2_mb</url>
-                     <username>root</username>
-                     <password>root</password>
+                     <url><%= @mb_store_db_url %></url>
+                     <username><%= @mb_store_db_username %></username>
+                     <password><%= @mb_store_db_password %></password>
                      <maxActive>50</maxActive>
                      <maxWait>60000</maxWait>
                      <minIdle>5</minIdle>
@@ -108,7 +151,6 @@
                  </configuration>
              </definition>
          </datasource>
--->
 
         <!-- MSSQL server -->
         <!-- Please enable any one of the following datasource based on your MSSQL driver library -->

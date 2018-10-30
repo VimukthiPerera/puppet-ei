@@ -492,11 +492,7 @@
      getting this node to join the cluster.
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
-                enable="<%= @clustering_enabled %>">
-
-        <!-- Parameter to differentiate clustering mode, Default value will be "nonWorkerManager" in which
-         case the all nodes of the cluster run schedule tasks-->
-        <parameter name="clusteringPattern">nonWorkerManager</parameter>
+                enable="true">
 
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
@@ -518,8 +514,18 @@
                     is deemed to have left the cluster, it will be detected by the Group Membership
                     Service (GMS) using a TCP ping mechanism.
         -->
-        <parameter name="membershipScheme"><%= @clustering_membership_scheme %></parameter>
-        <!--<parameter name="licenseKey">xxx</parameter>-->
+        <parameter name="membershipScheme">aws</parameter>
+
+
+        <parameter name="accessKey"><%= @aws_access_key %></parameter>
+        <parameter name="secretKey"><%= @aws_secret_key %></parameter>
+        <parameter name="securityGroup">WSO2SecurityGroup</parameter>
+        <parameter name="region"><%= @aws_region %></parameter>
+        <parameter name="tagKey">cluster</parameter>
+        <parameter name="tagValue">ei</parameter>
+
+
+	<!--<parameter name="licenseKey">xxx</parameter>-->
         <!--<parameter name="mgtCenterURL">http://localhost:8081/mancenter/</parameter>-->
 
         <!--
@@ -532,11 +538,11 @@
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
 
         <!-- The multicast port to be used -->
-        <parameter name="mcastPort">45564</parameter>
+        <!-- <parameter name="mcastPort">45564</parameter> -->
 
-        <parameter name="mcastTTL">100</parameter>
+        <!-- <parameter name="mcastTTL">100</parameter> -->
 
-        <parameter name="mcastTimeout">60</parameter>
+        <!-- <parameter name="mcastTimeout">60</parameter> -->
 
         <!--
            The IP address of the network interface to which the multicasting has to be bound to.
@@ -547,7 +553,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">127.0.0.1</parameter>
+        <parameter name="localMemberHost"><%= @local_member_host %></parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -592,14 +598,6 @@
            The list of static or well-known members. These entries will only be valid if the
            "membershipScheme" above is set to "wka"
         -->
-        <members>
-            <%- @clustering_wka_members.each do |member| -%>
-            <member>
-                <hostName><%= member['hostname'] %></hostName>
-                <port><%= member['port'] %></port>
-            </member>
-            <%- end -%>
-        </members>
 
         <!--
         Enable the groupManagement entry if you need to run this node as a cluster manager.

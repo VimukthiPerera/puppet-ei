@@ -29,6 +29,7 @@ class ei_analytics_dashboard::params {
   $hostname = 'localhost'
   $mgt_hostname = 'localhost'
   $jdk_version = 'jdk1.8.0_192'
+  $ei_package = 'wso2ei-6.4.0.zip'
 
   # Define the template
   $start_script_template = 'wso2/analytics/wso2/dashboard/bin/carbon.sh'
@@ -88,6 +89,10 @@ class ei_analytics_dashboard::params {
   $ei_analytics_db_username = 'wso2carbon'
   $ei_analytics_db_password = 'wso2carbon'
   $ei_analytics_db_driver = 'org.h2.Driver'
+
+  $analytics_db_url = 'jdbc:mysql://CF_RDS_URL:3306/EI_ANALYTICS?useSSL=false'
+  $analytics_db_username  = 'CF_DB_USERNAME'
+  $analytics_db_password  = 'CF_DB_PASSWORD'
 
   # wso2.business.rules.manager config
   $business_rules_manager_username = 'admin'

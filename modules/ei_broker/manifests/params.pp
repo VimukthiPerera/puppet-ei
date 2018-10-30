@@ -17,18 +17,27 @@
 # Claas ei_broker::params
 # This class includes all the necessary parameters.
 class ei_broker::params {
+
   $user = 'wso2carbon'
   $user_id = 802
   $user_group = 'wso2'
   $user_home = '/home/$user'
   $user_group_id = 802
+  $hostname = 'CF_ELB_DNS_NAME'
+  $mgt_hostname = 'CF_ELB_DNS_NAME'
+  $jdk_version = 'jdk1.8.0_192'
+  $aws_access_key = 'access-key'
+  $aws_secret_key = 'secretkey'
+  $aws_region = 'REGION_NAME'
+  $local_member_host = 'LOCAL-MEMBER-HOST'
+  $http_proxy_port = '80'
+  $https_proxy_port = '443'
   $product = 'wso2ei'
   $product_version = '6.4.0'
   $profile = 'broker'
-  $hostname = 'localhost'
   $service_name = "${product}-${profile}"
-  $mgt_hostname = 'localhost'
-  $jdk_version = 'jdk1.8.0_192'
+  $thriftServerHost = 'CF_ELB_DNS_NAME'
+  $ei_package = 'wso2ei-6.4.0.zip'
 
   # Define the template
   $start_script_template = "wso2/broker/bin/wso2server.sh"
@@ -38,10 +47,10 @@ class ei_broker::params {
     'wso2/broker/conf/carbon.xml',
     'wso2/broker/conf/axis2/axis2.xml',
     'wso2/broker/conf/user-mgt.xml',
-    # 'wso2/broker/conf/registry.xml',
-    # 'wso2/broker/conf/identity/identity.xml',
-    # 'wso2/broker/conf/security/authenticators.xml',
-    # 'wso2/broker/conf/tomcat/catalina-server.xml',
+    'wso2/broker/conf/registry.xml',
+    'wso2/broker/conf/log4j.properties',
+    'wso2/broker/conf/hazelcast.properties',
+    'wso2/broker/conf/tomcat/catalina-server.xml',
   ]
 
   # ------ Configuration Params ------ #
@@ -64,15 +73,17 @@ class ei_broker::params {
   $mqtt_trust_store_cert_type = 'SunX509'
 
   # master-datasources.xml
-  $carbon_db_url = 'jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
-  $carbon_db_username = 'wso2carbon'
-  $carbon_db_password = 'wso2carbon'
-  $carbon_db_driver = 'org.h2.Driver'
+  $mb_store_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2_MB_DB?autoReconnect=true&amp;useSSL=false'
+  $mb_store_db_username = 'CF_DB_USERNAME'
+  $mb_store_db_password = 'CF_DB_PASSWORD'
 
-  $mb_store_db_url = 'jdbc:h2:repository/database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
-  $mb_store_db_username = 'wso2carbon'
-  $mb_store_db_password = 'wso2carbon'
-  $mb_store_db_driver = 'org.h2.Driver'
+  $mb_reg_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2_CONFIG_GOV_DB?autoReconnect=true&amp;useSSL=false'
+  $mb_reg_db_username = 'CF_DB_USERNAME'
+  $mb_reg_db_password = 'CF_DB_PASSWORD'
+
+  $mb_user_db_url = 'jdbc:mysql://CF_RDS_URL:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false'
+  $mb_user_db_username = 'CF_DB_USERNAME'
+  $mb_user_db_password = 'CF_DB_PASSWORD'
 
   # carbon.xml
   $security_keystore_location = '${carbon.home}/repository/resources/security/wso2carbon.jks'
@@ -81,22 +92,9 @@ class ei_broker::params {
   $security_keystore_key_alias = 'wso2carbon'
   $security_keystore_key_password = 'wso2carbon'
 
-  $security_internal_keystore_location = '${carbon.home}/repository/resources/security/wso2carbon.jks'
-  $security_internal_keystore_type = 'JKS'
-  $security_internal_keystore_password = 'wso2carbon'
-  $security_internal_keystore_key_alias = 'wso2carbon'
-  $security_internal_keystore_key_password = 'wso2carbon'
-
   $security_trust_store_location = '${carbon.home}/repository/resources/security/client-truststore.jks'
   $security_trust_store_type = 'JKS'
   $security_trust_store_password = 'wso2carbon'
-
-  # axis2.xml
-  $clustering_enabled = 'false'
-  $clustering_wka_members = [
-    { hostname => '127.0.0.1', port => '4000'},
-    # { hostname => '127.0.0.1', port => '4001'},
-  ]
 
   # user-mgt.xml
   $admin_username = 'admin'

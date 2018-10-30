@@ -19,8 +19,8 @@
 class ei_analytics_dashboard::startserver inherits ei_analytics_dashboard::params {
 
   # Start the service
-  service { $service_name:
-    ensure => running,
-    enable => true,
-  }
+  # service { $service_name:
+  #   ensure => running,
+  #   enable => true,
+  # }
 }
